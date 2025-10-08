@@ -27,14 +27,18 @@ public class MainPage {
         buttons[6] = new JButton("Check Out Book");
         buttons[7] = new JButton("Check-In Book");
 
-        actions[0] = () -> books.add(booksService.addNewBook(frame));
-        actions[1] = () -> booksService.addNewBook(frame);
-        actions[2] = () -> booksService.addNewBook(frame);
-        actions[3] = () -> booksService.addNewBook(frame);
-        actions[4] = () -> booksService.addNewBook(frame);
-        actions[5] = () -> booksService.addNewBook(frame);
-        actions[6] = () -> booksService.addNewBook(frame);
-        actions[7] = () -> booksService.addNewBook(frame);
+        actions[0] = () -> {
+            booksService.addNewBook(books);
+            
+        };
+
+        actions[1] = () -> temFrame();
+        actions[2] = () -> temFrame();
+        actions[3] = () -> temFrame();
+        actions[4] = () -> temFrame();
+        actions[5] = () -> temFrame();
+        actions[6] = () -> temFrame();
+        actions[7] = () -> temFrame();
 
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,11 +46,11 @@ public class MainPage {
     }
 
     public void showMainPageOptions() {
-        frame.setLayout(new GridLayout(4, 2));
+        JPanel panel = new JPanel(new GridLayout(4, 2));
 
         for(int idx = 0; idx<8; idx++) {
             final int ind = idx;
-            frame.add(buttons[idx]);
+            panel.add(buttons[idx]);
             buttons[idx].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println(buttons[ind].getText()+" is clicked");
@@ -55,9 +59,14 @@ public class MainPage {
             });
         }
         
+        frame.add(panel);
         frame.revalidate();
         frame.repaint();
         frame.setVisible(true);
+    }
+
+    private void temFrame() {
+        
     }
 
 }
