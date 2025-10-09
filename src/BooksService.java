@@ -64,7 +64,21 @@ public class BooksService {
                 isAnyError = true;
                 idError.setText("*Id can not be empty");
             } else {
-                idError.setText("");
+                Boolean isIdExist = false;
+                for(Book book:books) {
+                    if(id.equals(book.getBookId())) {
+                        isIdExist = true;
+                        break;
+                    }
+                }
+
+                if(isIdExist == true) {
+                    isAnyError = true;
+                    idError.setText("*This id is already exist");
+                }
+                else {
+                    idError.setText("");
+                }
             }
 
             if(name.isEmpty()) {

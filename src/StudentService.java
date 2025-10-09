@@ -60,7 +60,20 @@ public class StudentService {
                 isAnyError = true;
                 registerError.setText("*Should contain digit only");
             } else {
-                registerError.setText("");
+                Boolean isIdExist = false;
+                for(Student student:students) {
+                    if(student.getRegisterNumber().equals(registerNum)) {
+                        isAnyError = true;
+                        isIdExist = true;
+                        break;
+                    }
+                }
+
+                if(isIdExist) {
+                    registerError.setText("*This id already exist");
+                } else {
+                    registerError.setText("");
+                }
             }
 
             if(isAnyError == false) {
