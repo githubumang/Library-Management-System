@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class StudentService {
 
@@ -72,5 +75,26 @@ public class StudentService {
 
         dialog.setVisible(true);
 
+    }
+
+    public void showAllStudent (ArrayList<Student>students) {
+        JDialog dialog = new JDialog((Frame) null, "Show All Register Student", true);
+
+        dialog.setSize(600, 500);
+
+        String[] columns = {"Register Number", "Name"};
+
+        DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
+        
+        for(Student student:students) {
+            Object[] row = {student.getRegisterNumber(), student.getName()};
+            tableModel.addRow(row);
+        }
+
+        JTable table = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(table);
+        dialog.add(scrollPane);
+
+        dialog.setVisible(true);
     }
 }

@@ -21,9 +21,9 @@ public class MainPage {
         books.add(new Book("002", "Beta", "ABC", 10));
         books.add(new Book("003", "Gamma", "PQR", 10));
 
-        students.add(new Student("Mohan", "123"));
-        students.add(new Student("Mohan", "123"));
-        students.add(new Student("Mohan", "123"));
+        students.add(new Student("Mohan Bhagwat", "123"));
+        students.add(new Student("Ajay Sharma", "243"));
+        students.add(new Student("Aman Gupta", "001"));
 
         booksService = new BooksService();
         studentService = new StudentService();
@@ -42,7 +42,7 @@ public class MainPage {
         actions[2] = () -> temFrame();
         actions[3] = () -> booksService.showBooks(books);
         actions[4] = () -> studentService.registerStudent(students);
-        actions[5] = () -> temFrame();
+        actions[5] = () -> studentService.showAllStudent(students);;
         actions[6] = () -> temFrame();
         actions[7] = () -> temFrame();
 
