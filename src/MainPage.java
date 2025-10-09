@@ -10,16 +10,21 @@ public class MainPage {
     Runnable[] actions = new Runnable[8];
     
     ArrayList<Book> books = new ArrayList<Book>();
+    ArrayList<Student> students = new ArrayList<Student>();
+    
     BooksService booksService;
+    StudentService studentService;
 
     public MainPage() {
-        System.out.println("MainPage called");
         frame = new JFrame();
+        books.add(new Book("001", "Alpha", "XYZ", 10));
+        books.add(new Book("002", "Beta", "ABC", 10));
+        books.add(new Book("003", "Gamma", "PQR", 10));
 
         booksService = new BooksService();
 
         buttons[0] = new JButton("Add a New Book");
-        buttons[1] = new JButton("Upgrade Quantity of a Book");
+        buttons[1] = new JButton("Update Quantity of a Book");
         buttons[2] = new JButton("Search a Book");
         buttons[3] = new JButton("Show All Books");
         buttons[4] = new JButton("Register Student");
@@ -27,15 +32,11 @@ public class MainPage {
         buttons[6] = new JButton("Check Out Book");
         buttons[7] = new JButton("Check-In Book");
 
-        actions[0] = () -> {
-            booksService.addNewBook(books);
-            
-        };
-
+        actions[0] = () -> booksService.addNewBook(books);
         actions[1] = () -> temFrame();
         actions[2] = () -> temFrame();
-        actions[3] = () -> temFrame();
-        actions[4] = () -> temFrame();
+        actions[3] = () -> booksService.showBooks(books);
+        actions[4] = () -> studentService.registerStudent(null);
         actions[5] = () -> temFrame();
         actions[6] = () -> temFrame();
         actions[7] = () -> temFrame();
@@ -53,7 +54,6 @@ public class MainPage {
             panel.add(buttons[idx]);
             buttons[idx].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println(buttons[ind].getText()+" is clicked");
                     actions[ind].run();
                 }
             });

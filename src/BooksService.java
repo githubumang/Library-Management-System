@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -6,7 +7,10 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class BooksService {
 
@@ -90,10 +94,6 @@ public class BooksService {
 
             if(isAnyError == false) {
                 books.add(new Book(id, name, author, Integer.parseInt(qty)));
-                int n = books.size();
-                for(int i = 0; i<n; i++) {
-                    System.out.println(books.get(i).getBookId());
-                }
                 dialog.dispose();
             }
         });
@@ -103,5 +103,29 @@ public class BooksService {
         });
 
         dialog.setVisible(true); 
+    }
+
+    public void showBooks (ArrayList<Book> books) {
+        JDialog dialog = new JDialog((Frame) null, "Show All Books", true);
+
+        dialog.setSize(600, 500);
+        dialog.setLayout(new GridLayout(5, 2));
+
+        String[] columns = {"Book Id", "Book Name", "Author", "Quantity"};
+
+        DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
+
+        for(Book book:books) {
+            Object[] row = {book.getBookId(), book.getBookName(), book.getAuthorName(), book.getBookQty()};
+            tableModel.addRow(row);
+        }
+
+        JTable table = new JTable(tableModel);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        dialog.add(scrollPane, BorderLayout.CENTER);
+
+        dialog.setVisible(true);
     }
 }
