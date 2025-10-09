@@ -21,7 +21,12 @@ public class MainPage {
         books.add(new Book("002", "Beta", "ABC", 10));
         books.add(new Book("003", "Gamma", "PQR", 10));
 
+        students.add(new Student("Mohan", "123"));
+        students.add(new Student("Mohan", "123"));
+        students.add(new Student("Mohan", "123"));
+
         booksService = new BooksService();
+        studentService = new StudentService();
 
         buttons[0] = new JButton("Add a New Book");
         buttons[1] = new JButton("Update Quantity of a Book");
@@ -36,7 +41,7 @@ public class MainPage {
         actions[1] = () -> temFrame();
         actions[2] = () -> temFrame();
         actions[3] = () -> booksService.showBooks(books);
-        actions[4] = () -> studentService.registerStudent(null);
+        actions[4] = () -> studentService.registerStudent(students);
         actions[5] = () -> temFrame();
         actions[6] = () -> temFrame();
         actions[7] = () -> temFrame();

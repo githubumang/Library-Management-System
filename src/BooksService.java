@@ -17,7 +17,7 @@ public class BooksService {
     public void addNewBook (ArrayList<Book> books) {
         JDialog dialog = new JDialog((Frame) null, "Add New Book", true); // true = modal
         dialog.setSize(600, 500);
-        dialog.setLayout(new GridLayout(5, 2));
+        dialog.setLayout(new GridLayout(5, 3));
 
         JTextField bookId = new JTextField();
         JLabel idError = new JLabel("");
@@ -109,7 +109,6 @@ public class BooksService {
         JDialog dialog = new JDialog((Frame) null, "Show All Books", true);
 
         dialog.setSize(600, 500);
-        dialog.setLayout(new GridLayout(5, 2));
 
         String[] columns = {"Book Id", "Book Name", "Author", "Quantity"};
 
