@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -141,4 +143,82 @@ public class BooksService {
 
         dialog.setVisible(true);
     }
+
+    public void searchBook (ArrayList<Book> books) {
+        
+        JDialog dialog = new JDialog((Frame) null, "Search Book", null);
+
+        dialog.setSize(700, 500);
+        dialog.setLayout(new BorderLayout(10, 10));
+
+        JPanel topPanel = new JPanel(new BorderLayout(5, 5));
+
+        // Label
+        JLabel searchLabel = new JLabel("Enter book id/name, author name to search:");
+        topPanel.add(searchLabel, BorderLayout.WEST);
+
+        // Search box
+        JTextField searchBox = new JTextField();
+        searchBox.setPreferredSize(new Dimension(300, 30)); // Make it wider
+        topPanel.add(searchBox, BorderLayout.CENTER);
+
+        // Search button
+        JButton searchButton = new JButton("Search");
+        searchButton.setPreferredSize(new Dimension(100, 30));
+        topPanel.add(searchButton, BorderLayout.EAST);
+
+        // Add top panel to dialog
+        dialog.add(topPanel, BorderLayout.NORTH);
+        
+
+        String[] columns = {"Book Id", "Book Name", "Author", "Quantity"};
+
+        DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
+
+
+        JTable table = new JTable(tableModel);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        dialog.add(scrollPane, BorderLayout.CENTER);
+
+        searchButton.addActionListener(e -> {
+            tableModel.setRowCount(0);
+            String searchWord = searchBox.getText();
+            if(!searchWord.isEmpty()) {
+                for(Book book:books) {
+                    if(book.getBookId().toLowerCase().contains(searchWord.toLowerCase()) || book.getBookName().toLowerCase().contains(searchWord.toLowerCase()) || book.getAuthorName().toLowerCase().contains(searchWord.toLowerCase())) {
+                        Object[] row = {book.getBookId(), book.getBookName(), book.getAuthorName(), book.getBookQty()};
+                        tableModel.addRow(row);
+                    }
+                }
+            }
+        });
+        
+
+        dialog.setVisible(true);
+    }
+
+    // public void updateQty(ArrayList<Book> books) {
+    //     JDialog dialog = new JDialog((Frame)null, "Add/Remove New Books");
+        
+    //     dialog.setSize(600, 500);
+
+    //     JTextField bookId = new JTextField();
+    //     JLabel idError = new JLabel("");
+
+    //     JButton searchBook = new JButton("Search Book");
+        
+    //     dialog.add(new JLabel("Enter book id"));
+    //     dialog.add(bookId);
+    //     dialog.add(idError);
+    //     dialog.add(searchBook);
+
+    //     searchBook.addActionListener(_ -> {
+            
+    //     });
+        
+
+    //     dialog.setVisible(true);
+    // }
 }

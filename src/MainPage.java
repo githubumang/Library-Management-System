@@ -18,8 +18,9 @@ public class MainPage {
     public MainPage() {
         frame = new JFrame();
         books.add(new Book("001", "Alpha", "XYZ", 10));
-        books.add(new Book("002", "Beta", "ABC", 10));
+        books.add(new Book("002", "Beta", "Gam", 10));
         books.add(new Book("003", "Gamma", "PQR", 10));
+        books.add(new Book("004", "GammaButton", "PQR", 10));
 
         students.add(new Student("Mohan Bhagwat", "123"));
         students.add(new Student("Ajay Sharma", "243"));
@@ -39,7 +40,7 @@ public class MainPage {
 
         actions[0] = () -> booksService.addNewBook(books);
         actions[1] = () -> temFrame();
-        actions[2] = () -> temFrame();
+        actions[2] = () -> booksService.searchBook(books);
         actions[3] = () -> booksService.showBooks(books);
         actions[4] = () -> studentService.registerStudent(students);
         actions[5] = () -> studentService.showAllStudent(students);;
