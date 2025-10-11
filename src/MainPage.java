@@ -39,7 +39,7 @@ public class MainPage {
         buttons[7] = new JButton("Check-In Book");
 
         actions[0] = () -> booksService.addNewBook(books);
-        actions[1] = () -> temFrame();
+        actions[1] = () -> booksService.updateQty(books);
         actions[2] = () -> booksService.searchBook(books);
         actions[3] = () -> booksService.showBooks(books);
         actions[4] = () -> studentService.registerStudent(students);

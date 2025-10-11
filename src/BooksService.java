@@ -1,17 +1,22 @@
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 public class BooksService {
@@ -199,26 +204,145 @@ public class BooksService {
         dialog.setVisible(true);
     }
 
-    // public void updateQty(ArrayList<Book> books) {
-    //     JDialog dialog = new JDialog((Frame)null, "Add/Remove New Books");
+    public void updateQty(ArrayList<Book> books) {
+        int[] ind = {0};
+        JDialog dialog = new JDialog((Frame)null, "Add/Remove New Books", true);
         
-    //     dialog.setSize(600, 500);
+        dialog.setSize(600, 500);
+        dialog.setLayout(new BorderLayout(10, 10));
 
-    //     JTextField bookId = new JTextField();
-    //     JLabel idError = new JLabel("");
+        //Search Panel
 
-    //     JButton searchBook = new JButton("Search Book");
+        JPanel searchPanel = new JPanel();
+        searchPanel.setLayout(new GridLayout(2, 3));
+
+        JTextField bookId = new JTextField();
+        JLabel idError = new JLabel("");
+        bookId.setPreferredSize(new Dimension(300, 30));
+        JButton searchBookBtn = new JButton("Search");
+
+        searchPanel.add(new JLabel("Enter Book id:"));
+        searchPanel.add(bookId);
+        searchPanel.add(idError);
+        searchPanel.add(searchBookBtn);
+
+        //Info Panel
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new GridLayout(2, 2));
+
+        JLabel bookName = new JLabel("Book Name : ");
+        JLabel bookQuantity = new JLabel("Book Quantity: ");
+        JLabel bookAuthor = new JLabel("Book Author: ");
+
+        infoPanel.add(bookName);
+        infoPanel.add(bookQuantity);
+        infoPanel.add(bookAuthor);
         
-    //     dialog.add(new JLabel("Enter book id"));
-    //     dialog.add(bookId);
-    //     dialog.add(idError);
-    //     dialog.add(searchBook);
+        dialog.add(searchPanel, BorderLayout.NORTH);
+        dialog.add(infoPanel, BorderLayout.CENTER);
 
-    //     searchBook.addActionListener(_ -> {
-            
-    //     });
+        //ChangeInfo Panel
+        JPanel changeInfo = new JPanel();
+        changeInfo.setLayout(new GridLayout(3, 2));
+        JRadioButton addBook = new JRadioButton("Add Book");
+        JRadioButton removeBook = new JRadioButton("Remove Book");
+        JTextField quantity = new JTextField();
+        JLabel quantityError = new JLabel();
+        JButton changeQtyBtn = new JButton("Change Quantity");
+        changeQtyBtn.setEnabled(false);
+
+        quantity.setPreferredSize(new Dimension(300, 30));
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(addBook);
+        group.add(removeBook);
+
+        changeInfo.add(addBook);
+        changeInfo.add(removeBook);
+        changeInfo.add(quantity);
+        changeInfo.add(quantityError);
+        changeInfo.add(changeQtyBtn);
         
 
-    //     dialog.setVisible(true);
-    // }
+        dialog.add(changeInfo, BorderLayout.SOUTH);
+
+        searchBookBtn.addActionListener(_ -> {
+            ind[0] = 0;
+            Boolean isBookFound = false;
+            for(Book book:books) {
+                if(book.getBookId().equals(bookId.getText())) {
+                    isBookFound = true;
+                    bookAuthor.setText("Book Author: " + book.getAuthorName());
+                    bookName.setText("Book Name : " + book.getBookName());
+                    bookQuantity.setText("Book Quantity: " + book.getBookQty());
+                    break;
+                }
+                ind[0]++;
+            }
+
+            if(!isBookFound) {
+                changeQtyBtn.setEnabled(false);
+                bookAuthor.setText("Book Author: ");
+                    bookName.setText("Book Name : ");
+                    bookQuantity.setText("Book Quantity: ");
+            }
+            else {
+                changeQtyBtn.setEnabled(true);
+            }
+        });
+
+        changeQtyBtn.addActionListener(_ -> {
+            String selectedOpt = "";
+            quantityError.setText("");
+            if(addBook.isSelected()) {
+                selectedOpt = "added";
+            }
+            else if(removeBook.isSelected()) {
+                selectedOpt = "removed";
+            }
+            else {
+                quantityError.setText("*Please select add/remove option");
+            }
+
+            if(!selectedOpt.isEmpty()) {
+                String quantityCount = quantity.getText();
+                if(quantityCount.isEmpty()) {
+                    quantityError.setText("*Please enter a valid number");
+                }
+                else if(!quantityCount.matches("\\d+")) {
+                    quantityError.setText("*Please enter a valid number");
+                }
+                else if((selectedOpt.equals("removed") == true) && (Integer.parseInt(quantityCount.trim()) > books.get(ind[0]).getBookQty())) {
+                    quantityError.setText("*Please enter number less than book quantity.");
+                }
+                else {
+                    int newQuantity = 0;
+                    int oldQuantity = books.get(ind[0]).getBookQty();
+
+                    if(selectedOpt.equals("added")) {
+                        newQuantity = oldQuantity + Integer.parseInt(quantityCount);
+                    }
+                    else {
+                        newQuantity = oldQuantity - Integer.parseInt(quantityCount);
+                    }
+
+                    books.get(ind[0]).setQuantity(newQuantity);
+                    bookQuantity.setText("Book Quantity: " + newQuantity);
+
+                    JOptionPane.showMessageDialog(
+                        dialog,
+                        quantityCount+" books has been "+selectedOpt+" to "+books.get(ind[0]).getBookName()+". The new Quantity is "+newQuantity+".",
+                        "Success Message",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+
+                    
+                }
+            }
+        });
+        
+        
+
+        dialog.setVisible(true);
+    }
 }
