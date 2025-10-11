@@ -148,7 +148,7 @@ public class BooksService {
         
         JDialog dialog = new JDialog((Frame) null, "Search Book", null);
 
-        dialog.setSize(700, 500);
+        dialog.setSize(600, 500);
         dialog.setLayout(new BorderLayout(10, 10));
 
         JPanel topPanel = new JPanel(new BorderLayout(5, 5));
@@ -182,7 +182,7 @@ public class BooksService {
 
         dialog.add(scrollPane, BorderLayout.CENTER);
 
-        searchButton.addActionListener(e -> {
+        searchButton.addActionListener(_ -> {
             tableModel.setRowCount(0);
             String searchWord = searchBox.getText();
             if(!searchWord.isEmpty()) {

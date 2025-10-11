@@ -27,4 +27,8 @@ public class Book {
         return bookQty;
     }
 
+    public void setQuantity(int bookQty) {
+        this.bookQty = bookQty;
+    }
+
 }
