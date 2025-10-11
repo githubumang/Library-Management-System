@@ -45,7 +45,7 @@ public class MainPage {
         actions[4] = () -> studentService.registerStudent(students);
         actions[5] = () -> studentService.showAllStudent(students);;
         actions[6] = () -> studentService.checkOutBook(students, books);
-        actions[7] = () -> temFrame();
+        actions[7] = () -> studentService.checkInBook(students, books);;
 
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
