@@ -8,10 +8,10 @@ public class MainPage {
 
     JButton[] buttons = new JButton[8];
     Runnable[] actions = new Runnable[8];
-    
+
     ArrayList<Book> books = new ArrayList<Book>();
     ArrayList<Student> students = new ArrayList<Student>();
-    
+
     BooksService booksService;
     StudentService studentService;
 
@@ -43,9 +43,9 @@ public class MainPage {
         actions[2] = () -> booksService.searchBook(books);
         actions[3] = () -> booksService.showBooks(books);
         actions[4] = () -> studentService.registerStudent(students);
-        actions[5] = () -> studentService.showAllStudent(students);;
+        actions[5] = () -> studentService.showAllStudent(students);
         actions[6] = () -> studentService.checkOutBook(students, books);
-        actions[7] = () -> studentService.checkInBook(students, books);;
+        actions[7] = () -> studentService.checkInBook(students, books);
 
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,7 +55,7 @@ public class MainPage {
     public void showMainPageOptions() {
         JPanel panel = new JPanel(new GridLayout(4, 2));
 
-        for(int idx = 0; idx<8; idx++) {
+        for (int idx = 0; idx < 8; idx++) {
             final int ind = idx;
             panel.add(buttons[idx]);
             buttons[idx].addActionListener(new ActionListener() {
@@ -64,15 +64,11 @@ public class MainPage {
                 }
             });
         }
-        
+
         frame.add(panel);
         frame.revalidate();
         frame.repaint();
         frame.setVisible(true);
-    }
-
-    private void temFrame() {
-        
     }
 
 }
